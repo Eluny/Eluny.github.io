@@ -84,7 +84,7 @@
 项目名称：FlyingChess(飞行">
 <meta property="og:type" content="article">
 <meta property="og:title" content="飞行棋之殇~">
-<meta property="og:url" content="http://yoursite.com/2016/04/26/飞行棋之旅/index.html">
+<meta property="og:url" content="http://yoursite.com/2016/04/26/飞行棋之殇/index.html">
 <meta property="og:site_name" content="Tummy君的个人小站~">
 <meta property="og:description" content="啊哈哈，嗯。（已疯Android移动课布置的大作业，做一个联网的飞行棋，没有一点点的防备，大概持续了两周的时间，算是灰常水的做完了，意义很大，表面上我是做了挺久的Android开发，但不得不说，我瞄的只是复制粘贴啊，…，现在要自己凭空写还是有点虚的，但毕竟还是要迈出这一步的，不写一下都不知道自己那么优秀呢(逃。项目写得很混乱，特地来此总结一下。╮(╯▽╰)╭
 项目名称：FlyingChess(飞行">
@@ -94,7 +94,7 @@
 <meta property="og:image" content="https://github.com/Eluny/FlyingChess/blob/master/device-2016-04-22-214108.png?raw=true">
 <meta property="og:image" content="https://github.com/Eluny/FlyingChess/blob/master/device-2016-04-22-214138.png?raw=true">
 <meta property="og:image" content="https://github.com/Eluny/FlyingChess/blob/master/device-2016-04-22-214155.png?raw=true">
-<meta property="og:updated_time" content="2016-04-26T09:49:46.000Z">
+<meta property="og:updated_time" content="2016-04-26T10:10:24.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="飞行棋之殇~">
 <meta name="twitter:description" content="啊哈哈，嗯。（已疯Android移动课布置的大作业，做一个联网的飞行棋，没有一点点的防备，大概持续了两周的时间，算是灰常水的做完了，意义很大，表面上我是做了挺久的Android开发，但不得不说，我瞄的只是复制粘贴啊，…，现在要自己凭空写还是有点虚的，但毕竟还是要迈出这一步的，不写一下都不知道自己那么优秀呢(逃。项目写得很混乱，特地来此总结一下。╮(╯▽╰)╭
@@ -299,8 +299,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/04/26/飞行棋之旅/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/26/飞行棋之旅/" itemprop="commentsCount"></span>
+                <a href="/2016/04/26/飞行棋之殇/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/26/飞行棋之殇/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -328,6 +328,7 @@
 <p><strong>小伙伴：</strong><br>黄宁源，谢镇锋，陈家俊，吴梓明<br>陈资强，何旭，吴鸿飞</p>
 <p><strong>项目完成情况：</strong><br>按照大作业要求，基本完成了单机游戏，联网游戏的功能，即实现了基本的飞行棋规则，支持二到四人对战，支持同一wifi下多人游戏etc。</p>
 <p><strong>项目构建，设计：</strong><br><strong>1.基本游戏功能实现：</strong><br>将ChessBoard，Player，Ruler(游戏规则)抽象出来。<br>-(1)ChessBoard：暴露放棋子的操作moveChess()，而无需考虑具体的操作逻辑，这样的目的是a.专注于棋盘的交互，动效等，简洁简单;b.小组内分配任务更加合理(我猜<br>-(2)Player:模拟真实游戏玩家的操作，我们讨论之后抽象为LocalPlayer，ClientPlayer，NonePlayer，AIPlayer，WatchPlayer等，主要是提供onYourTurn()，think(int random)，putChess()，start()，end()，restart()等~接口，主要将自身委托与ruler等待被回调处理，同时包含chessboard的引用，真正的将”棋子”放下”棋盘”~<br>-(3)Ruler:核心类，主要负责游戏的init()，start()，restart()，dice()，handle()，即游戏开始，重新开始，摇骰子，放旗子时的对各个player进行处理，如棋子跳跃逻辑即可在handle里处理.<br><img src="https://raw.githubusercontent.com/Eluny/FlyingChess/master/UML20160422.png" alt="UML类图"><br><strong>2.联网功能实现：</strong><br>-(1)思路一：首先是参考：<a href="https://github.com/hillfly/WifiChat" target="_blank" rel="external">WifiChat</a>,使用UDP协议(单独指传输字符串这一块),上线时发送广播,传递自己的地址ip，让其他设备知道自己的存在，同时在UDP数据报中增加no,ip等字段辅助排序…恩。<br>-(2)思路二：参考<a href="https://github.com/markrjr/Salut" target="_blank" rel="external">Salut</a>，使用TCP协议，封装了<a href="http://hukai.me/android-training-course-in-chinese/connectivity/connect-devices-wireless/wifi-direct.html" target="_blank" rel="external">WifiP2pManager</a>发现同一wifi下连接设备的方法，并将设备地址信息保存在本地，并且封装了Socket一套发送消息接收消息的方法.<br>我们小组主要用的是第二种，学习成本小而且易用稳定，缺点是速度慢。<br>协议内容大致如下：<img src="http://7xor0b.com1.z0.glb.clouddn.com/flychess_protocal.png" alt="协议"></p>
+<p><strong>项目总结：</strong><br>很有意义的一次体验，感谢~第一次做项目虽然有些茫然，但是真正动手做过后发现…收获还是挺大的，无论是对项目本身(如何做一个联网的飞行棋)的理解，还是对”做项目”这件事，大家一起讨论一起研究还是很有趣很欢乐的，以后对”做项目”这件事也不会那么抵触了吧，我猜。嗯。再次感谢</p>
 <p><strong>接下来的进度安排:</strong><br>1.兼容蓝牙下多人游戏；<br>2.棋盘的优化以及飞行棋的特效;<br>3.重构逻辑，将功能分配地更加合理。（待…斟酌<br>4.AIPlayer，Replay功能。(构建的时候都是有考虑，待实现。</p>
 <p><strong>项目截图：</strong><br>配个lowlow的图：<br><img src="https://github.com/Eluny/FlyingChess/blob/master/device-2016-04-22-214108.png?raw=true" alt="飞行棋主界面"><br><img src="https://github.com/Eluny/FlyingChess/blob/master/device-2016-04-22-214138.png?raw=true" alt="单机游戏配置选择界面"><br><img src="https://github.com/Eluny/FlyingChess/blob/master/device-2016-04-22-214155.png?raw=true" alt="游戏界面"></p>
 <p><strong>项目地址：</strong><br><a href="https://github.com/Eluny/FlyingChess" target="_blank" rel="external">FlyingChess</a><br>灰常感谢~</p>
@@ -392,8 +393,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/04/26/飞行棋之旅/"
-           data-title="飞行棋之殇~" data-url="http://yoursite.com/2016/04/26/飞行棋之旅/">
+      <div class="ds-thread" data-thread-key="2016/04/26/飞行棋之殇/"
+           data-title="飞行棋之殇~" data-url="http://yoursite.com/2016/04/26/飞行棋之殇/">
       </div>
     
   </div>
